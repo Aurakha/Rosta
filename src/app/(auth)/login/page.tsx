@@ -3,32 +3,62 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
-import { Lock, Mail, AlertCircle, ArrowRight, ShieldCheck } from 'lucide-react';
+import { Lock, Mail, User, AlertCircle, CheckCircle2, ArrowRight, ShieldCheck, UserPlus, LogIn } from 'lucide-react';
 
 export default function LoginPage() {
   const router = useRouter();
+  const [mode, setMode] = useState<'LOGIN' | 'REGISTER'>('LOGIN');
+  const [nama, setNama] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
+  const [successMsg, setSuccessMsg] = useState('');
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setErrorMsg('');
+    setSuccessMsg('');
 
     try {
       const supabase = createClient();
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
 
-      if (error) {
-        setErrorMsg(error.message || 'Gagal masuk. Periksa kembali email dan kata sandi Anda.');
-      } else if (data.session) {
-        router.push('/');
-        router.refresh();
+      if (mode === 'LOGIN') {
+        const { data, error } = await supabase.auth.signInWithPassword({
+          email,
+          password,
+        });
+
+        if (error) {
+          setErrorMsg(error.message || 'Gagal masuk. Periksa kembali email dan kata sandi Anda.');
+        } else if (data.session) {
+          router.push('/');
+          router.refresh();
+        }
+      } else {
+        // Mode REGISTER (Daftar Akun Baru)
+        const { data, error } = await supabase.auth.signUp({
+          email,
+          password,
+          options: {
+            data: {
+              nama: nama.trim() || email.split('@')[0],
+            },
+          },
+        });
+
+        if (error) {
+          setErrorMsg(error.message || 'Gagal mendaftarkan akun baru.');
+        } else {
+          if (data.session) {
+            router.push('/');
+            router.refresh();
+          } else {
+            setSuccessMsg('Akun berhasil didaftarkan! Silakan cek email Anda jika konfirmasi aktif, atau langsung masuk.');
+            setMode('LOGIN');
+          }
+        }
       }
     } catch (err: unknown) {
       setErrorMsg((err as Error)?.message || 'Terjadi kesalahan pada sistem autentikasi.');
@@ -39,9 +69,9 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen bg-slate-950 flex flex-col justify-center items-center px-4 py-12">
-      <div className="w-full max-w-md bg-slate-900 border border-slate-800 rounded-2xl p-8 shadow-2xl">
+      <div className="w-full max-w-md bg-slate-900 border border-slate-800 rounded-3xl p-8 shadow-2xl">
         {/* Header Logo & Brand */}
-        <div className="text-center mb-8">
+        <div className="text-center mb-6">
           <div className="inline-flex w-14 h-14 rounded-2xl bg-gradient-to-tr from-amber-500 to-sky-500 items-center justify-center font-black text-slate-950 text-3xl shadow-lg mb-3">
             R
           </div>
@@ -55,6 +85,42 @@ export default function LoginPage() {
           </div>
         </div>
 
+        {/* Tab Pemilih Mode Masuk / Daftar */}
+        <div className="flex bg-slate-950/80 p-1 rounded-xl border border-slate-800 mb-6">
+          <button
+            type="button"
+            onClick={() => {
+              setMode('LOGIN');
+              setErrorMsg('');
+              setSuccessMsg('');
+            }}
+            className={`flex-1 py-2 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1.5 ${
+              mode === 'LOGIN'
+                ? 'bg-slate-800 text-white shadow-sm'
+                : 'text-slate-400 hover:text-slate-200'
+            }`}
+          >
+            <LogIn className="w-3.5 h-3.5" />
+            <span>Masuk</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setMode('REGISTER');
+              setErrorMsg('');
+              setSuccessMsg('');
+            }}
+            className={`flex-1 py-2 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1.5 ${
+              mode === 'REGISTER'
+                ? 'bg-gradient-to-r from-sky-600 to-blue-600 text-white shadow-sm'
+                : 'text-slate-400 hover:text-slate-200'
+            }`}
+          >
+            <UserPlus className="w-3.5 h-3.5" />
+            <span>Daftar Akun</span>
+          </button>
+        </div>
+
         {errorMsg && (
           <div className="mb-6 p-3.5 rounded-xl bg-red-500/10 border border-red-500/30 text-red-400 text-xs flex items-start gap-2.5">
             <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
@@ -62,7 +128,33 @@ export default function LoginPage() {
           </div>
         )}
 
-        <form onSubmit={handleLogin} className="space-y-4">
+        {successMsg && (
+          <div className="mb-6 p-3.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs flex items-start gap-2.5">
+            <CheckCircle2 className="w-4 h-4 shrink-0 mt-0.5" />
+            <span>{successMsg}</span>
+          </div>
+        )}
+
+        <form onSubmit={handleSubmit} className="space-y-4">
+          {mode === 'REGISTER' && (
+            <div>
+              <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5">
+                Nama Lengkap
+              </label>
+              <div className="relative">
+                <User className="w-4 h-4 text-slate-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                <input
+                  type="text"
+                  required
+                  value={nama}
+                  onChange={(e) => setNama(e.target.value)}
+                  placeholder="Budi Santoso"
+                  className="w-full pl-10 pr-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-sm text-slate-100 placeholder:text-slate-600 focus:outline-hidden focus:border-sky-500 transition"
+                />
+              </div>
+            </div>
+          )}
+
           <div>
             <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5">
               Email Pengguna
@@ -89,9 +181,10 @@ export default function LoginPage() {
               <input
                 type="password"
                 required
+                minLength={6}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
+                placeholder="Minimal 6 karakter"
                 className="w-full pl-10 pr-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-sm text-slate-100 placeholder:text-slate-600 focus:outline-hidden focus:border-sky-500 transition"
               />
             </div>
@@ -100,14 +193,19 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full mt-2 py-3 px-4 rounded-xl bg-gradient-to-r from-sky-600 to-blue-600 hover:from-sky-500 hover:to-blue-500 text-white font-semibold text-sm shadow-md transition flex items-center justify-center gap-2 disabled:opacity-50"
+            className="w-full mt-2 py-3 px-4 rounded-xl bg-gradient-to-r from-sky-600 to-blue-600 hover:from-sky-500 hover:to-blue-500 text-white font-semibold text-sm shadow-md transition flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer"
           >
             {loading ? (
-              <span>Memverifikasi...</span>
-            ) : (
+              <span>Memproses...</span>
+            ) : mode === 'LOGIN' ? (
               <>
                 <span>Masuk ke Sistem</span>
                 <ArrowRight className="w-4 h-4" />
+              </>
+            ) : (
+              <>
+                <span>Daftarkan Akun Baru</span>
+                <UserPlus className="w-4 h-4" />
               </>
             )}
           </button>

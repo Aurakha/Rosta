@@ -726,3 +726,31 @@ select id, 'Abdul Latif', '082177450720', 'BG 1234 XY'
 from vendor_travel
 where nama = 'Latif Travel'
 limit 1;
+
+-- 12. Trigger Otomatis Profil Pengguna Baru saat Registrasi di auth.users
+create or replace function public.handle_new_user()
+returns trigger
+language plpgsql
+security definer set search_path = public
+as $$
+declare
+  user_count int;
+begin
+  select count(*) into user_count from public.profil_pengguna;
+
+  insert into public.profil_pengguna (id, nama, peran)
+  values (
+    new.id,
+    coalesce(new.raw_user_meta_data->>'nama', split_part(new.email, '@', 1)),
+    case when user_count = 0 then 'ADMIN'::peran_pengguna else 'VIEWER'::peran_pengguna end
+  )
+  on conflict (id) do nothing;
+  return new;
+end;
+$$;
+
+drop trigger if exists on_auth_user_created on auth.users;
+create trigger on_auth_user_created
+  after insert on auth.users
+  for each row execute function public.handle_new_user();
+
