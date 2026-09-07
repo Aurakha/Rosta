@@ -27,11 +27,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="id" className="h-full bg-slate-50 antialiased">
+    <html lang="id" className="h-full bg-slate-50 antialiased" suppressHydrationWarning>
       <head>
         <link rel="icon" href="/icon.svg" type="image/svg+xml" />
       </head>
-      <body className="min-h-full flex flex-col text-slate-900 bg-slate-50">
+      <body className="min-h-full flex flex-col text-slate-900 bg-slate-50" suppressHydrationWarning>
         <CompanyProvider>
           <OfflineBanner />
           {children}

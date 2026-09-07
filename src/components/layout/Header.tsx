@@ -35,7 +35,7 @@ export function Header() {
                       Site Muratara
                     </span>
                   </div>
-                  <p className="text-xs text-slate-400 capitalize">
+                  <p className="text-xs text-slate-400 capitalize" suppressHydrationWarning>
                     {formatTanggal(todayWib)}
                   </p>
                 </div>
