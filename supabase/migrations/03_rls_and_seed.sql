@@ -38,51 +38,51 @@ as $$
   );
 $$;
 
--- Policy Tabel Master: Semua user terautentikasi bisa baca; hanya Admin bisa modifikasi
-create policy baca_perusahaan on perusahaan for select to authenticated using (true);
+-- Policy Tabel Master: Akses baca publik/anon & authenticated; modifikasi oleh Admin
+create policy baca_perusahaan on perusahaan for select using (true);
 create policy tulis_perusahaan on perusahaan for all to authenticated using (is_admin()) with check (is_admin());
 
-create policy baca_karyawan on karyawan for select to authenticated using (true);
+create policy baca_karyawan on karyawan for select using (true);
 create policy tulis_karyawan on karyawan for all to authenticated using (is_admin()) with check (is_admin());
 
-create policy baca_master_roster on master_roster for select to authenticated using (true);
+create policy baca_master_roster on master_roster for select using (true);
 create policy tulis_master_roster on master_roster for all to authenticated using (is_admin()) with check (is_admin());
 
-create policy baca_pool_shelter on pool_shelter for select to authenticated using (true);
+create policy baca_pool_shelter on pool_shelter for select using (true);
 create policy tulis_pool_shelter on pool_shelter for all to authenticated using (is_admin()) with check (is_admin());
 
-create policy baca_vendor_travel on vendor_travel for select to authenticated using (true);
+create policy baca_vendor_travel on vendor_travel for select using (true);
 create policy tulis_vendor_travel on vendor_travel for all to authenticated using (is_admin()) with check (is_admin());
 
-create policy baca_driver on driver for select to authenticated using (true);
+create policy baca_driver on driver for select using (true);
 create policy tulis_driver on driver for all to authenticated using (is_admin()) with check (is_admin());
 
-create policy baca_plafon_tiket on plafon_tiket for select to authenticated using (true);
+create policy baca_plafon_tiket on plafon_tiket for select using (true);
 create policy tulis_plafon_tiket on plafon_tiket for all to authenticated using (is_admin()) with check (is_admin());
 
-create policy baca_pengaturan_kebijakan on pengaturan_kebijakan for select to authenticated using (true);
+create policy baca_pengaturan_kebijakan on pengaturan_kebijakan for select using (true);
 create policy tulis_pengaturan_kebijakan on pengaturan_kebijakan for all to authenticated using (is_admin()) with check (is_admin());
 
-create policy baca_counter_dokumen on counter_dokumen for select to authenticated using (true);
+create policy baca_counter_dokumen on counter_dokumen for select using (true);
 create policy tulis_counter_dokumen on counter_dokumen for all to authenticated using (is_admin()) with check (is_admin());
 
 -- Policy Tabel Operasional
-create policy baca_siklus_roster on siklus_roster for select to authenticated using (true);
+create policy baca_siklus_roster on siklus_roster for select using (true);
 create policy tulis_siklus_roster on siklus_roster for all to authenticated using (is_admin()) with check (is_admin());
 
-create policy baca_perjalanan on perjalanan for select to authenticated using (true);
+create policy baca_perjalanan on perjalanan for select using (true);
 create policy tulis_perjalanan on perjalanan for all to authenticated using (is_admin()) with check (is_admin());
 
-create policy baca_surat_jalan on surat_jalan for select to authenticated using (true);
+create policy baca_surat_jalan on surat_jalan for select using (true);
 create policy tulis_surat_jalan on surat_jalan for all to authenticated using (is_admin()) with check (is_admin());
 
-create policy baca_manifest_penumpang on manifest_penumpang for select to authenticated using (true);
+create policy baca_manifest_penumpang on manifest_penumpang for select using (true);
 create policy tulis_manifest_penumpang on manifest_penumpang for all to authenticated using (is_admin()) with check (is_admin());
 
-create policy baca_cuti_tahunan on cuti_tahunan for select to authenticated using (true);
+create policy baca_cuti_tahunan on cuti_tahunan for select using (true);
 create policy tulis_cuti_tahunan on cuti_tahunan for all to authenticated using (is_admin()) with check (is_admin());
 
-create policy baca_notifikasi_log on notifikasi_log for select to authenticated using (true);
+create policy baca_notifikasi_log on notifikasi_log for select using (true);
 create policy tulis_notifikasi_log on notifikasi_log for all to authenticated using (is_admin()) with check (is_admin());
 
 -- Policy Khusus: Audit Log & Profil Pengguna
