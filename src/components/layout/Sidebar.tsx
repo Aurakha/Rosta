@@ -69,11 +69,8 @@ export function Sidebar({ isOpenMobile, onCloseMobile }: SidebarProps) {
           <Link
             href="/"
             onClick={onCloseMobile}
-            className="flex items-center space-x-3 group"
+            className="flex items-center group"
           >
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-500 to-sky-500 flex items-center justify-center font-black text-slate-950 text-xl tracking-tight shadow-md group-hover:scale-105 transition">
-              R
-            </div>
             <div>
               <div className="text-lg font-black tracking-wider text-white flex items-center gap-1.5">
                 ROSTA

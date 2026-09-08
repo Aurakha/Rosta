@@ -58,10 +58,7 @@ export function Header({ onOpenSidebarMobile }: HeaderProps) {
                 <Menu className="w-5 h-5" />
               </button>
 
-              <Link href="/" className="flex items-center space-x-2 group">
-                <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-amber-500 to-sky-500 flex items-center justify-center font-black text-slate-950 text-base shadow-sm">
-                  R
-                </div>
+              <Link href="/" className="flex items-center group">
                 <div className="text-base font-black tracking-wider text-slate-100 flex items-center gap-1">
                   ROSTA
                   <span className="text-[8px] uppercase font-bold tracking-widest px-1 py-0.2 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">
