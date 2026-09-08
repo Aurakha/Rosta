@@ -12,7 +12,6 @@ import {
   PlaneTakeoff,
   FileText,
   BarChart3,
-  Sliders,
   LogIn,
   LogOut,
   User as UserIcon,
@@ -40,7 +39,6 @@ export function Sidebar({ isOpenMobile, onCloseMobile }: SidebarProps) {
     { href: '/perjalanan', label: 'Catat Perjalanan', icon: PlaneTakeoff },
     { href: '/dokumen', label: 'Manifest & Surat Jalan', icon: FileText },
     { href: '/rekap', label: 'Rekap & Biaya', icon: BarChart3 },
-    { href: '/pengaturan', label: 'Pengaturan & Master', icon: Sliders },
   ];
 
   const companyButtons: { code: KodePerusahaan; label: string }[] = [
