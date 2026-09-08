@@ -280,7 +280,6 @@ export default function KelolaKaryawanPage() {
                   required
                   value={nik}
                   onChange={(e) => setNik(e.target.value)}
-                  placeholder="Contoh: KTA-2024-001"
                   className="w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs md:text-sm text-slate-900 focus:bg-white focus:outline-hidden focus:border-sky-500 transition"
                 />
               </div>
@@ -314,7 +313,6 @@ export default function KelolaKaryawanPage() {
                   required
                   value={nama}
                   onChange={(e) => setNama(e.target.value)}
-                  placeholder="Nama karyawan"
                   className="w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs md:text-sm text-slate-900 focus:bg-white focus:outline-hidden focus:border-sky-500 transition"
                 />
               </div>
@@ -328,7 +326,6 @@ export default function KelolaKaryawanPage() {
                   type="text"
                   value={jabatan}
                   onChange={(e) => setJabatan(e.target.value)}
-                  placeholder="Contoh: Supervisor Produksi"
                   className="w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs md:text-sm text-slate-900 focus:bg-white focus:outline-hidden focus:border-sky-500 transition"
                 />
               </div>
@@ -342,7 +339,6 @@ export default function KelolaKaryawanPage() {
                   type="text"
                   value={departemen}
                   onChange={(e) => setDepartemen(e.target.value)}
-                  placeholder="Contoh: Produksi, HRGA, Eng"
                   className="w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs md:text-sm text-slate-900 focus:bg-white focus:outline-hidden focus:border-sky-500 transition"
                 />
               </div>
@@ -408,7 +404,6 @@ export default function KelolaKaryawanPage() {
                   type="text"
                   value={poh}
                   onChange={(e) => setPoh(e.target.value)}
-                  placeholder="Contoh: Palembang, Yogyakarta"
                   className="w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs md:text-sm text-slate-900 focus:bg-white focus:outline-hidden focus:border-sky-500 transition"
                 />
               </div>
@@ -422,7 +417,6 @@ export default function KelolaKaryawanPage() {
                   type="text"
                   value={noHp}
                   onChange={(e) => setNoHp(e.target.value)}
-                  placeholder="08xxxxxxxxxx"
                   className="w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs md:text-sm text-slate-900 focus:bg-white focus:outline-hidden focus:border-sky-500 transition"
                 />
               </div>
@@ -436,7 +430,6 @@ export default function KelolaKaryawanPage() {
                   type="text"
                   value={atasan}
                   onChange={(e) => setAtasan(e.target.value)}
-                  placeholder="Nama atasan (untuk notifikasi)"
                   className="w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs md:text-sm text-slate-900 focus:bg-white focus:outline-hidden focus:border-sky-500 transition"
                 />
               </div>
