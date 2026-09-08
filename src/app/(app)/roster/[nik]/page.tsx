@@ -28,6 +28,8 @@ import {
   CreditCard,
   History,
   CheckCircle2,
+  ArrowUpRight,
+  ArrowDownLeft,
 } from 'lucide-react';
 
 export default function DetailKaryawanPage() {
@@ -373,8 +375,18 @@ export default function DetailKaryawanPage() {
               perjalananList.map((p) => (
                 <div key={p.id} className="py-3 space-y-1">
                   <div className="flex items-center justify-between">
-                    <span className="font-bold text-slate-900">
-                      {p.arah === 'KELUAR' ? '✈ Berangkat Cuti' : '🏠 Masuk Site'}
+                    <span className="inline-flex items-center gap-1 font-bold text-slate-900">
+                      {p.arah === 'KELUAR' ? (
+                        <>
+                          <ArrowUpRight className="w-3.5 h-3.5 text-sky-600" />
+                          <span>Berangkat Cuti (KELUAR)</span>
+                        </>
+                      ) : (
+                        <>
+                          <ArrowDownLeft className="w-3.5 h-3.5 text-emerald-600" />
+                          <span>Masuk Site (MASUK)</span>
+                        </>
+                      )}
                     </span>
                     <span className="font-mono text-slate-500">
                       {formatTanggalPendek(p.tanggal_travel)}

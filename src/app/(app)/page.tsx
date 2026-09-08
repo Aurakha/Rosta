@@ -14,8 +14,10 @@ import {
 } from '@/lib/utils';
 import { addDays, subDays, format, isToday } from 'date-fns';
 import {
-  PlaneTakeoff,
-  Home,
+  ArrowUpRight,
+  ArrowDownLeft,
+  Navigation,
+  Building2,
   AlertTriangle,
   Phone,
   MessageSquare,
@@ -213,7 +215,7 @@ export default function PapanHariIniPage() {
           <div className="p-4 bg-gradient-to-r from-sky-600 to-blue-600 text-white flex items-center justify-between">
             <div className="flex items-center space-x-2.5">
               <div className="p-2 rounded-xl bg-white/10 backdrop-blur-xs">
-                <PlaneTakeoff className="w-5 h-5 text-white" />
+                <ArrowUpRight className="w-5 h-5 text-white" />
               </div>
               <div>
                 <h3 className="font-bold text-sm tracking-wide">BERANGKAT (ANTAR)</h3>
@@ -263,7 +265,7 @@ export default function PapanHariIniPage() {
                         <span className="truncate">{trip.pool_shelter || 'Pool Shelter'}</span>
                       </div>
                       <div className="col-span-2 flex items-center gap-1.5 text-slate-700">
-                        <PlaneTakeoff className="w-3.5 h-3.5 text-slate-500 shrink-0" />
+                        <Navigation className="w-3.5 h-3.5 text-slate-500 shrink-0" />
                         <span>Tujuan: <strong className="text-slate-900">{trip.titik_tujuan}</strong> {trip.poh ? `(POH ${trip.poh})` : ''}</span>
                       </div>
                     </div>
@@ -322,7 +324,7 @@ export default function PapanHariIniPage() {
           <div className="p-4 bg-gradient-to-r from-emerald-600 to-teal-600 text-white flex items-center justify-between">
             <div className="flex items-center space-x-2.5">
               <div className="p-2 rounded-xl bg-white/10 backdrop-blur-xs">
-                <Home className="w-5 h-5 text-white" />
+                <ArrowDownLeft className="w-5 h-5 text-white" />
               </div>
               <div>
                 <h3 className="font-bold text-sm tracking-wide">DATANG (JEMPUT)</h3>
@@ -372,7 +374,7 @@ export default function PapanHariIniPage() {
                         <span className="truncate">{trip.titik_tujuan || 'Titik Jemput'}</span>
                       </div>
                       <div className="col-span-2 flex items-center gap-1.5 text-slate-700">
-                        <Home className="w-3.5 h-3.5 text-slate-500 shrink-0" />
+                        <Building2 className="w-3.5 h-3.5 text-slate-500 shrink-0" />
                         <span>Antar ke: <strong className="text-slate-900">{trip.pool_shelter || 'Pool Shelter Site'}</strong></span>
                       </div>
                     </div>

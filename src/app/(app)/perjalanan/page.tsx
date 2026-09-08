@@ -18,6 +18,8 @@ import {
   RefreshCw,
   Search,
   Filter,
+  ArrowUpRight,
+  ArrowDownLeft,
 } from 'lucide-react';
 
 export default function PerjalananHubPage() {
@@ -93,14 +95,14 @@ export default function PerjalananHubPage() {
             href="/perjalanan/berangkat"
             className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-700 text-white text-xs md:text-sm font-bold shadow-xs transition"
           >
-            <PlaneTakeoff className="w-4 h-4" />
+            <ArrowUpRight className="w-4 h-4" />
             <span>Catat Keberangkatan</span>
           </Link>
           <Link
             href="/perjalanan/kembali"
             className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs md:text-sm font-bold shadow-xs transition"
           >
-            <Home className="w-4 h-4" />
+            <ArrowDownLeft className="w-4 h-4" />
             <span>Catat Kedatangan</span>
           </Link>
         </div>
@@ -114,22 +116,22 @@ export default function PerjalananHubPage() {
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Cari nama karyawan, NIK, tujuan..."
-            className="w-full pl-9 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 focus:bg-white focus:outline-hidden focus:border-sky-500"
+            placeholder="Cari nama, NIK, tujuan..."
+            className="w-full pl-9 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 focus:bg-white focus:outline-hidden focus:border-sky-500 transition"
           />
         </div>
 
         <div className="flex items-center gap-2 w-full sm:w-auto">
+          <Filter className="w-4 h-4 text-slate-400 shrink-0" />
           <select
             value={filterArah}
             onChange={(e) => setFilterArah(e.target.value)}
-            className="px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 focus:bg-white font-medium"
+            className="px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 font-semibold focus:bg-white focus:outline-hidden focus:border-sky-500 transition"
           >
             <option value="SEMUA">Semua Arah</option>
             <option value="KELUAR">Berangkat Cuti (KELUAR)</option>
-            <option value="MASUK">Kembali ke Site (MASUK)</option>
+            <option value="MASUK">Masuk Site (MASUK)</option>
           </select>
-
           <button
             onClick={loadTrips}
             disabled={loading}
@@ -141,44 +143,57 @@ export default function PerjalananHubPage() {
         </div>
       </div>
 
-      {/* TABEL LOG PERJALANAN */}
+      {/* DAFTAR PERJALANAN */}
       <div className="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs">
-            <thead className="bg-slate-50 text-slate-600 font-bold border-b border-slate-200 uppercase tracking-wider">
-              <tr>
-                <th className="px-4 py-3">Tanggal</th>
-                <th className="px-4 py-3">Arah</th>
-                <th className="px-4 py-3">Nama Karyawan</th>
-                <th className="px-4 py-3">Rute / Titik Tujuan</th>
-                <th className="px-4 py-3">Pool Shelter</th>
-                <th className="px-4 py-3">Jam Jemput</th>
-                <th className="px-4 py-3">Moda & Booking</th>
-                <th className="px-4 py-3 text-right">Harga Tiket</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-100">
-              {filteredTrips.length === 0 ? (
+        {loading ? (
+          <div className="p-8 text-center text-xs text-slate-400">
+            Memuat data log perjalanan...
+          </div>
+        ) : filteredTrips.length === 0 ? (
+          <div className="p-8 text-center text-xs text-slate-400">
+            Tidak ada riwayat perjalanan yang cocok dengan filter.
+          </div>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-xs">
+              <thead className="bg-slate-50/80 text-slate-500 border-b border-slate-200 font-bold uppercase tracking-wider text-[10px]">
                 <tr>
-                  <td colSpan={8} className="px-4 py-12 text-center text-slate-400">
-                    {loading ? 'Memuat log perjalanan...' : 'Belum ada data perjalanan tersimpan.'}
-                  </td>
+                  <th className="px-4 py-3">Tanggal</th>
+                  <th className="px-4 py-3">Arah</th>
+                  <th className="px-4 py-3">Nama Karyawan</th>
+                  <th className="px-4 py-3">Tujuan</th>
+                  <th className="px-4 py-3">Jam Jemput</th>
+                  <th className="px-4 py-3">Pool Shelter</th>
+                  <th className="px-4 py-3">Moda</th>
+                  <th className="px-4 py-3">Cost Bearer</th>
+                  <th className="px-4 py-3 text-right">Tiket (Rp)</th>
                 </tr>
-              ) : (
-                filteredTrips.map((t) => (
+              </thead>
+              <tbody className="divide-y divide-slate-100">
+                {filteredTrips.map((t) => (
                   <tr key={t.id} className="hover:bg-slate-50/80 transition">
                     <td className="px-4 py-3 font-mono font-semibold text-slate-800">
                       {formatTanggalPendek(t.tanggal_travel)}
                     </td>
                     <td className="px-4 py-3">
                       <span
-                        className={`inline-flex items-center px-2 py-0.5 rounded text-[10px] font-black ${
+                        className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-[10px] font-black ${
                           t.arah === 'KELUAR'
                             ? 'bg-sky-100 text-sky-800'
                             : 'bg-emerald-100 text-emerald-800'
                         }`}
                       >
-                        {t.arah === 'KELUAR' ? '✈ KELUAR' : '🏠 MASUK'}
+                        {t.arah === 'KELUAR' ? (
+                          <>
+                            <ArrowUpRight className="w-3.5 h-3.5" />
+                            <span>KELUAR</span>
+                          </>
+                        ) : (
+                          <>
+                            <ArrowDownLeft className="w-3.5 h-3.5" />
+                            <span>MASUK</span>
+                          </>
+                        )}
                       </span>
                     </td>
                     <td className="px-4 py-3">
@@ -210,11 +225,11 @@ export default function PerjalananHubPage() {
                       {formatRupiah(t.harga_tiket)}
                     </td>
                   </tr>
-                ))
-              )}
-            </tbody>
-          </table>
-        </div>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -233,8 +233,8 @@ export default function SusunManifestPage() {
               onChange={(e) => setArah(e.target.value as 'KELUAR' | 'MASUK')}
               className="w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs md:text-sm text-slate-900 font-semibold"
             >
-              <option value="KELUAR">✈ KELUAR (Berangkat Cuti Lapangan)</option>
-              <option value="MASUK">🏠 MASUK (Kembali Masuk Site)</option>
+              <option value="KELUAR">KELUAR — Berangkat Cuti Lapangan</option>
+              <option value="MASUK">MASUK — Kembali Masuk Site</option>
             </select>
           </div>
 
