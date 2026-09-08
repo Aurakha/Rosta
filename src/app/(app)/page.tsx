@@ -14,8 +14,8 @@ import {
 } from '@/lib/utils';
 import { addDays, subDays, format, isToday } from 'date-fns';
 import {
-  ArrowUpRight,
-  ArrowDownLeft,
+  PlaneTakeoff,
+  PlaneLanding,
   Navigation,
   Building2,
   AlertTriangle,
@@ -215,11 +215,11 @@ export default function PapanHariIniPage() {
           <div className="p-4 bg-gradient-to-r from-sky-600 to-blue-600 text-white flex items-center justify-between">
             <div className="flex items-center space-x-2.5">
               <div className="p-2 rounded-xl bg-white/10 backdrop-blur-xs">
-                <ArrowUpRight className="w-5 h-5 text-white" />
+                <PlaneTakeoff className="w-5 h-5 text-white" />
               </div>
               <div>
-                <h3 className="font-bold text-sm tracking-wide">BERANGKAT (ANTAR)</h3>
-                <p className="text-[11px] text-sky-100">Menuju Bandara / Stasiun</p>
+                <h3 className="font-bold text-sm tracking-wide">DEPARTURES (BERANGKAT)</h3>
+                <p className="text-[11px] text-sky-100">Antar Menuju Bandara / Stasiun</p>
               </div>
             </div>
             <span className="px-2.5 py-1 rounded-full bg-white/20 text-xs font-black">
@@ -324,11 +324,11 @@ export default function PapanHariIniPage() {
           <div className="p-4 bg-gradient-to-r from-emerald-600 to-teal-600 text-white flex items-center justify-between">
             <div className="flex items-center space-x-2.5">
               <div className="p-2 rounded-xl bg-white/10 backdrop-blur-xs">
-                <ArrowDownLeft className="w-5 h-5 text-white" />
+                <PlaneLanding className="w-5 h-5 text-white" />
               </div>
               <div>
-                <h3 className="font-bold text-sm tracking-wide">DATANG (JEMPUT)</h3>
-                <p className="text-[11px] text-emerald-100">Kembali Menuju Site</p>
+                <h3 className="font-bold text-sm tracking-wide">ARRIVALS (KEDATANGAN)</h3>
+                <p className="text-[11px] text-emerald-100">Jemput Kembali Menuju Site</p>
               </div>
             </div>
             <span className="px-2.5 py-1 rounded-full bg-white/20 text-xs font-black">

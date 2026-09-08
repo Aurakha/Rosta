@@ -12,14 +12,12 @@ import {
 } from '@/lib/utils';
 import {
   PlaneTakeoff,
-  Home,
+  PlaneLanding,
   Plus,
   ArrowRight,
   RefreshCw,
   Search,
   Filter,
-  ArrowUpRight,
-  ArrowDownLeft,
 } from 'lucide-react';
 
 export default function PerjalananHubPage() {
@@ -95,15 +93,15 @@ export default function PerjalananHubPage() {
             href="/perjalanan/berangkat"
             className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-700 text-white text-xs md:text-sm font-bold shadow-xs transition"
           >
-            <ArrowUpRight className="w-4 h-4" />
-            <span>Catat Keberangkatan</span>
+            <PlaneTakeoff className="w-4 h-4" />
+            <span>Catat Keberangkatan (Departure)</span>
           </Link>
           <Link
             href="/perjalanan/kembali"
             className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs md:text-sm font-bold shadow-xs transition"
           >
-            <ArrowDownLeft className="w-4 h-4" />
-            <span>Catat Kedatangan</span>
+            <PlaneLanding className="w-4 h-4" />
+            <span>Catat Kedatangan (Arrival)</span>
           </Link>
         </div>
       </div>
@@ -129,8 +127,8 @@ export default function PerjalananHubPage() {
             className="px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 font-semibold focus:bg-white focus:outline-hidden focus:border-sky-500 transition"
           >
             <option value="SEMUA">Semua Arah</option>
-            <option value="KELUAR">Berangkat Cuti (KELUAR)</option>
-            <option value="MASUK">Masuk Site (MASUK)</option>
+            <option value="KELUAR">DEPARTURE — Berangkat Cuti (KELUAR)</option>
+            <option value="MASUK">ARRIVAL — Masuk Site (MASUK)</option>
           </select>
           <button
             onClick={loadTrips}
@@ -159,7 +157,7 @@ export default function PerjalananHubPage() {
               <thead className="bg-slate-50/80 text-slate-500 border-b border-slate-200 font-bold uppercase tracking-wider text-[10px]">
                 <tr>
                   <th className="px-4 py-3">Tanggal</th>
-                  <th className="px-4 py-3">Arah</th>
+                  <th className="px-4 py-3">Arah (Status)</th>
                   <th className="px-4 py-3">Nama Karyawan</th>
                   <th className="px-4 py-3">Tujuan</th>
                   <th className="px-4 py-3">Jam Jemput</th>
@@ -177,21 +175,21 @@ export default function PerjalananHubPage() {
                     </td>
                     <td className="px-4 py-3">
                       <span
-                        className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-[10px] font-black ${
+                        className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[10px] font-black tracking-wider uppercase ${
                           t.arah === 'KELUAR'
-                            ? 'bg-sky-100 text-sky-800'
-                            : 'bg-emerald-100 text-emerald-800'
+                            ? 'bg-amber-500/10 text-amber-700 border border-amber-500/30'
+                            : 'bg-emerald-500/10 text-emerald-700 border border-emerald-500/30'
                         }`}
                       >
                         {t.arah === 'KELUAR' ? (
                           <>
-                            <ArrowUpRight className="w-3.5 h-3.5" />
-                            <span>KELUAR</span>
+                            <PlaneTakeoff className="w-3.5 h-3.5 text-amber-600 shrink-0" />
+                            <span>DEPARTURE</span>
                           </>
                         ) : (
                           <>
-                            <ArrowDownLeft className="w-3.5 h-3.5" />
-                            <span>MASUK</span>
+                            <PlaneLanding className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                            <span>ARRIVAL</span>
                           </>
                         )}
                       </span>

@@ -24,12 +24,10 @@ import {
   Briefcase,
   Building2,
   PlaneTakeoff,
-  Home,
+  PlaneLanding,
   CreditCard,
   History,
   CheckCircle2,
-  ArrowUpRight,
-  ArrowDownLeft,
 } from 'lucide-react';
 
 export default function DetailKaryawanPage() {
@@ -158,7 +156,7 @@ export default function DetailKaryawanPage() {
               href={`/perjalanan/kembali?nik=${encodeURIComponent(roster.nik)}`}
               className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-xs transition"
             >
-              <Home className="w-4 h-4" />
+              <PlaneLanding className="w-4 h-4" />
               <span>Catat Kedatangan Site</span>
             </Link>
           ) : (
@@ -375,16 +373,16 @@ export default function DetailKaryawanPage() {
               perjalananList.map((p) => (
                 <div key={p.id} className="py-3 space-y-1">
                   <div className="flex items-center justify-between">
-                    <span className="inline-flex items-center gap-1 font-bold text-slate-900">
+                    <span className="inline-flex items-center gap-1.5 font-bold text-slate-900">
                       {p.arah === 'KELUAR' ? (
                         <>
-                          <ArrowUpRight className="w-3.5 h-3.5 text-sky-600" />
-                          <span>Berangkat Cuti (KELUAR)</span>
+                          <PlaneTakeoff className="w-3.5 h-3.5 text-amber-600" />
+                          <span>DEPARTURE (Berangkat Cuti)</span>
                         </>
                       ) : (
                         <>
-                          <ArrowDownLeft className="w-3.5 h-3.5 text-emerald-600" />
-                          <span>Masuk Site (MASUK)</span>
+                          <PlaneLanding className="w-3.5 h-3.5 text-emerald-600" />
+                          <span>ARRIVAL (Masuk Site)</span>
                         </>
                       )}
                     </span>
