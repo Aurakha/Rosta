@@ -1,12 +1,16 @@
 'use client';
 
-import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import React, { useState, Suspense } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 import { Lock, Mail, User, AlertCircle, CheckCircle2, ArrowRight, ShieldCheck, UserPlus, LogIn } from 'lucide-react';
 
-export default function LoginPage() {
+function LoginForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const rawRedirect = searchParams.get('redirect');
+  const redirectTarget = rawRedirect && rawRedirect.startsWith('/') ? rawRedirect : '/';
+
   const [mode, setMode] = useState<'LOGIN' | 'REGISTER'>('LOGIN');
   const [nama, setNama] = useState('');
   const [email, setEmail] = useState('');
@@ -33,7 +37,7 @@ export default function LoginPage() {
         if (error) {
           setErrorMsg(error.message || 'Gagal masuk. Periksa kembali email dan kata sandi Anda.');
         } else if (data.session) {
-          router.push('/');
+          router.push(redirectTarget);
           router.refresh();
         }
       } else {
@@ -52,7 +56,7 @@ export default function LoginPage() {
           setErrorMsg(error.message || 'Gagal mendaftarkan akun baru.');
         } else {
           if (data.session) {
-            router.push('/');
+            router.push(redirectTarget);
             router.refresh();
           } else {
             setSuccessMsg('Akun berhasil didaftarkan! Silakan cek email Anda jika konfirmasi aktif, atau langsung masuk.');
@@ -218,5 +222,19 @@ export default function LoginPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-slate-950 flex items-center justify-center text-slate-400">
+          Memuat formulir masuk...
+        </div>
+      }
+    >
+      <LoginForm />
+    </Suspense>
   );
 }

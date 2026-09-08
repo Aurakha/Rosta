@@ -2,11 +2,15 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useAuth } from '@/context/AuthContext';
 import { createClient } from '@/lib/supabase/client';
 import { PoolShelter, VendorTravel, Driver } from '@/types/database';
-import { ArrowLeft, Car, MapPin, Plus, Save, Phone } from 'lucide-react';
+import { ArrowLeft, Car, MapPin, Plus, Save, Phone, Lock } from 'lucide-react';
 
 export default function PengaturanTravelPage() {
+  const router = useRouter();
+  const { user } = useAuth();
   const [shelters, setShelters] = useState<PoolShelter[]>([]);
   const [vendors, setVendors] = useState<VendorTravel[]>([]);
   const [drivers, setDrivers] = useState<Driver[]>([]);
@@ -43,6 +47,10 @@ export default function PengaturanTravelPage() {
 
   const handleAddShelter = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!user) {
+      router.push(`/login?redirect=${encodeURIComponent('/pengaturan/travel')}`);
+      return;
+    }
     if (!newShelterName.trim()) return;
 
     try {
@@ -57,6 +65,10 @@ export default function PengaturanTravelPage() {
 
   const handleAddDriver = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!user) {
+      router.push(`/login?redirect=${encodeURIComponent('/pengaturan/travel')}`);
+      return;
+    }
     if (!newDriverName.trim() || vendors.length === 0) return;
 
     try {
@@ -94,6 +106,23 @@ export default function PengaturanTravelPage() {
           </p>
         </div>
       </div>
+
+      {!user && (
+        <div className="p-4 bg-amber-50 border border-amber-200 rounded-2xl text-xs text-amber-900 flex items-center justify-between gap-3 shadow-xs">
+          <div className="flex items-center gap-2.5">
+            <Lock className="w-4 h-4 text-amber-600 shrink-0" />
+            <p>
+              <span className="font-bold">Mode Pratinjau:</span> Anda perlu login terlebih dahulu untuk menambah data shelter atau driver baru.
+            </p>
+          </div>
+          <Link
+            href={`/login?redirect=${encodeURIComponent('/pengaturan/travel')}`}
+            className="px-3 py-1.5 bg-amber-600 hover:bg-amber-700 text-white rounded-lg text-xs font-semibold whitespace-nowrap transition"
+          >
+            Masuk Akun
+          </Link>
+        </div>
+      )}
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* POOL SHELTER */}

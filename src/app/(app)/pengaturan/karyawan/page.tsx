@@ -2,8 +2,10 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 import { useCompany } from '@/context/CompanyContext';
+import { useAuth } from '@/context/AuthContext';
 import { Perusahaan, Karyawan } from '@/types/database';
 import { formatTanggal, formatTanggalPendek } from '@/lib/utils';
 import {
@@ -21,6 +23,8 @@ import {
 } from 'lucide-react';
 
 export default function KelolaKaryawanPage() {
+  const router = useRouter();
+  const { user } = useAuth();
   const { selectedCompany } = useCompany();
   const [karyawanList, setKaryawanList] = useState<Karyawan[]>([]);
   const [perusahaanList, setPerusahaanList] = useState<Perusahaan[]>([]);
@@ -94,6 +98,11 @@ export default function KelolaKaryawanPage() {
 
   const handleSimpanKaryawan = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!user) {
+      setMessage({ type: 'error', text: 'Anda harus masuk (login) terlebih dahulu untuk menambah data karyawan.' });
+      router.push('/login?redirect=/pengaturan/karyawan');
+      return;
+    }
     setSubmitting(true);
     setMessage(null);
 
@@ -215,8 +224,14 @@ export default function KelolaKaryawanPage() {
         </div>
 
         <button
-          onClick={() => setShowForm(!showForm)}
-          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-700 text-white text-xs md:text-sm font-semibold shadow-xs transition"
+          onClick={() => {
+            if (!user) {
+              router.push('/login?redirect=/pengaturan/karyawan');
+              return;
+            }
+            setShowForm(!showForm);
+          }}
+          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-700 text-white text-xs md:text-sm font-semibold shadow-xs transition cursor-pointer"
         >
           <UserPlus className="w-4 h-4" />
           <span>{showForm ? 'Tutup Form' : 'Tambah Karyawan Baru'}</span>

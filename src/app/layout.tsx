@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import { CompanyProvider } from '@/context/CompanyContext';
+import { AuthProvider } from '@/context/AuthContext';
 import { OfflineBanner } from '@/components/layout/OfflineBanner';
 
 export const metadata: Metadata = {
@@ -32,10 +33,12 @@ export default function RootLayout({
         <link rel="icon" href="/icon.svg" type="image/svg+xml" />
       </head>
       <body className="min-h-full flex flex-col text-slate-900 bg-slate-50" suppressHydrationWarning>
-        <CompanyProvider>
-          <OfflineBanner />
-          {children}
-        </CompanyProvider>
+        <AuthProvider>
+          <CompanyProvider>
+            <OfflineBanner />
+            {children}
+          </CompanyProvider>
+        </AuthProvider>
       </body>
     </html>
   );

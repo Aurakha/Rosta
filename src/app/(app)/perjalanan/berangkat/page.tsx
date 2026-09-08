@@ -4,6 +4,7 @@ import React, { useState, useEffect, useMemo, Suspense } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
+import { RequireAuth } from '@/components/auth/RequireAuth';
 import { useCompany } from '@/context/CompanyContext';
 import {
   VStatusRoster,
@@ -555,7 +556,9 @@ export default function CatatKeberangkatanPage() {
         </div>
       }
     >
-      <CatatKeberangkatanContent />
+      <RequireAuth actionTitle="Mencatat Keberangkatan Cuti Baru">
+        <CatatKeberangkatanContent />
+      </RequireAuth>
     </Suspense>
   );
 }

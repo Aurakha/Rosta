@@ -13,6 +13,7 @@ import {
   AlertCircle,
   Download,
 } from 'lucide-react';
+import { RequireAuth } from '@/components/auth/RequireAuth';
 
 interface ParsedRow {
   nik: string;
@@ -201,8 +202,9 @@ export default function ImporKaryawanPage() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6">
-      <div className="flex items-center gap-3">
+    <RequireAuth actionTitle="Mengimpor Data Karyawan Massal">
+      <div className="max-w-4xl mx-auto space-y-6">
+        <div className="flex items-center gap-3">
         <Link
           href="/pengaturan/karyawan"
           className="p-2 rounded-xl bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 transition"
@@ -324,5 +326,6 @@ export default function ImporKaryawanPage() {
         </div>
       )}
     </div>
+    </RequireAuth>
   );
 }

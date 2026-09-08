@@ -2,13 +2,17 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useAuth } from '@/context/AuthContext';
 import { createClient } from '@/lib/supabase/client';
 import { useCompany } from '@/context/CompanyContext';
 import { PlafonTiket, Perusahaan } from '@/types/database';
 import { formatRupiah } from '@/lib/utils';
-import { ArrowLeft, CreditCard, Plus, Save } from 'lucide-react';
+import { ArrowLeft, CreditCard, Plus, Save, Lock } from 'lucide-react';
 
 export default function PengaturanPlafonPage() {
+  const router = useRouter();
+  const { user } = useAuth();
   const { selectedCompany } = useCompany();
   const [plafonList, setPlafonList] = useState<PlafonTiket[]>([]);
   const [perusahaanList, setPerusahaanList] = useState<Perusahaan[]>([]);
@@ -44,6 +48,10 @@ export default function PengaturanPlafonPage() {
 
   const handleAddPlafon = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!user) {
+      router.push(`/login?redirect=${encodeURIComponent('/pengaturan/plafon')}`);
+      return;
+    }
     if (!poh.trim() || !perusahaanId) return;
 
     try {
@@ -85,6 +93,23 @@ export default function PengaturanPlafonPage() {
           </p>
         </div>
       </div>
+
+      {!user && (
+        <div className="p-4 bg-amber-50 border border-amber-200 rounded-2xl text-xs text-amber-900 flex items-center justify-between gap-3 shadow-xs">
+          <div className="flex items-center gap-2.5">
+            <Lock className="w-4 h-4 text-amber-600 shrink-0" />
+            <p>
+              <span className="font-bold">Mode Pratinjau:</span> Anda perlu login terlebih dahulu untuk menambah atau mengedit plafon tiket.
+            </p>
+          </div>
+          <Link
+            href={`/login?redirect=${encodeURIComponent('/pengaturan/plafon')}`}
+            className="px-3 py-1.5 bg-amber-600 hover:bg-amber-700 text-white rounded-lg text-xs font-semibold whitespace-nowrap transition"
+          >
+            Masuk Akun
+          </Link>
+        </div>
+      )}
 
       {/* FORM TAMBAH PLAFON */}
       <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs space-y-4">

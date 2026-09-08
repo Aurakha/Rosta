@@ -1,42 +1,20 @@
 'use client';
-
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useCompany, KodePerusahaan } from '@/context/CompanyContext';
+import { useAuth } from '@/context/AuthContext';
 import { formatTanggal } from '@/lib/utils';
-import { createClient } from '@/lib/supabase/client';
 import { Settings, LogIn, LogOut, User as UserIcon } from 'lucide-react';
-import type { User } from '@supabase/supabase-js';
 
 export function Header() {
   const router = useRouter();
   const { selectedCompany, setSelectedCompany } = useCompany();
-  const [user, setUser] = useState<User | null>(null);
+  const { user, signOut } = useAuth();
   const todayWib = new Date();
 
-  useEffect(() => {
-    const supabase = createClient();
-
-    // Dapatkan user saat ini
-    supabase.auth.getUser().then(({ data: { user } }) => {
-      setUser(user);
-    });
-
-    // Dengarkan perubahan state auth (login / logout)
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null);
-    });
-
-    return () => {
-      subscription.unsubscribe();
-    };
-  }, []);
-
   const handleLogout = async () => {
-    const supabase = createClient();
-    await supabase.auth.signOut();
-    setUser(null);
+    await signOut();
     router.push('/login');
     router.refresh();
   };

@@ -2,12 +2,16 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useAuth } from '@/context/AuthContext';
 import { createClient } from '@/lib/supabase/client';
 import { useCompany } from '@/context/CompanyContext';
 import { MasterRoster, Perusahaan } from '@/types/database';
-import { ArrowLeft, CalendarRange, Save, CheckCircle2, AlertCircle } from 'lucide-react';
+import { ArrowLeft, CalendarRange, Save, CheckCircle2, AlertCircle, Lock } from 'lucide-react';
 
 export default function MasterRosterPage() {
+  const router = useRouter();
+  const { user } = useAuth();
   const { selectedCompany } = useCompany();
   const [rosterList, setRosterList] = useState<MasterRoster[]>([]);
   const [perusahaanList, setPerusahaanList] = useState<Perusahaan[]>([]);
@@ -41,6 +45,12 @@ export default function MasterRosterPage() {
   };
 
   const handleSave = async (item: MasterRoster) => {
+    if (!user) {
+      setMessage({ type: 'error', text: 'Silakan login terlebih dahulu untuk mengubah aturan roster.' });
+      router.push(`/login?redirect=${encodeURIComponent('/pengaturan/roster')}`);
+      return;
+    }
+
     try {
       const supabase = createClient();
       const { error } = await supabase
@@ -82,6 +92,23 @@ export default function MasterRosterPage() {
           </p>
         </div>
       </div>
+
+      {!user && (
+        <div className="p-4 bg-amber-50 border border-amber-200 rounded-2xl text-xs text-amber-900 flex items-center justify-between gap-3 shadow-xs">
+          <div className="flex items-center gap-2.5">
+            <Lock className="w-4 h-4 text-amber-600 shrink-0" />
+            <p>
+              <span className="font-bold">Mode Pratinjau:</span> Anda perlu login terlebih dahulu untuk mengubah rasio master roster.
+            </p>
+          </div>
+          <Link
+            href={`/login?redirect=${encodeURIComponent('/pengaturan/roster')}`}
+            className="px-3 py-1.5 bg-amber-600 hover:bg-amber-700 text-white rounded-lg text-xs font-semibold whitespace-nowrap transition"
+          >
+            Masuk Akun
+          </Link>
+        </div>
+      )}
 
       {message && (
         <div

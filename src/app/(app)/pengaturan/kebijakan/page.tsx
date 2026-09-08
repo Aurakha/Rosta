@@ -2,9 +2,11 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useAuth } from '@/context/AuthContext';
 import { createClient } from '@/lib/supabase/client';
 import { Perusahaan, PengaturanKebijakan } from '@/types/database';
-import { ArrowLeft, Sliders, CheckCircle2, AlertCircle, Save, Info } from 'lucide-react';
+import { ArrowLeft, Sliders, CheckCircle2, AlertCircle, Save, Info, Lock } from 'lucide-react';
 
 interface KebijakanWithPerusahaan {
   perusahaan_id: string;
@@ -16,6 +18,8 @@ interface KebijakanWithPerusahaan {
 }
 
 export default function PengaturanKebijakanPage() {
+  const router = useRouter();
+  const { user } = useAuth();
   const [kebijakanList, setKebijakanList] = useState<KebijakanWithPerusahaan[]>([]);
   const [loading, setLoading] = useState(true);
   const [savingId, setSavingId] = useState<string | null>(null);
@@ -73,6 +77,15 @@ export default function PengaturanKebijakanPage() {
   };
 
   const handleSimpan = async (item: KebijakanWithPerusahaan) => {
+    if (!user) {
+      setMessage({
+        type: 'error',
+        text: 'Anda harus login terlebih dahulu untuk menyimpan perubahan kebijakan.',
+      });
+      router.push(`/login?redirect=${encodeURIComponent('/pengaturan/kebijakan')}`);
+      return;
+    }
+
     setSavingId(item.perusahaan_id);
     setMessage(null);
 
@@ -123,6 +136,23 @@ export default function PengaturanKebijakanPage() {
           </p>
         </div>
       </div>
+
+      {!user && (
+        <div className="p-4 bg-amber-50 border border-amber-200 rounded-2xl text-xs text-amber-900 flex items-center justify-between gap-3 shadow-xs">
+          <div className="flex items-center gap-2.5">
+            <Lock className="w-4 h-4 text-amber-600 shrink-0" />
+            <p>
+              <span className="font-bold">Mode Pratinjau:</span> Anda perlu login terlebih dahulu untuk dapat menyimpan atau mengubah kebijakan cuti.
+            </p>
+          </div>
+          <Link
+            href={`/login?redirect=${encodeURIComponent('/pengaturan/kebijakan')}`}
+            className="px-3 py-1.5 bg-amber-600 hover:bg-amber-700 text-white rounded-lg text-xs font-semibold whitespace-nowrap transition"
+          >
+            Masuk Akun
+          </Link>
+        </div>
+      )}
 
       {/* Info Banner Penting */}
       <div className="p-4 bg-sky-50 border border-sky-200 rounded-2xl text-xs text-sky-900 flex items-start gap-3">
