@@ -373,18 +373,8 @@ export default function DetailKaryawanPage() {
               perjalananList.map((p) => (
                 <div key={p.id} className="py-3 space-y-1">
                   <div className="flex items-center justify-between">
-                    <span className="inline-flex items-center gap-1.5 font-bold text-slate-900">
-                      {p.arah === 'KELUAR' ? (
-                        <>
-                          <PlaneTakeoff className="w-3.5 h-3.5 text-amber-600" />
-                          <span>DEPARTURE (Berangkat Cuti)</span>
-                        </>
-                      ) : (
-                        <>
-                          <PlaneLanding className="w-3.5 h-3.5 text-emerald-600" />
-                          <span>ARRIVAL (Masuk Site)</span>
-                        </>
-                      )}
+                    <span className="font-bold text-slate-900">
+                      {p.arah === 'KELUAR' ? 'Berangkat Cuti (KELUAR)' : 'Masuk Site (MASUK)'}
                     </span>
                     <span className="font-mono text-slate-500">
                       {formatTanggalPendek(p.tanggal_travel)}
