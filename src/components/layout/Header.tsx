@@ -5,9 +5,13 @@ import { useRouter } from 'next/navigation';
 import { useCompany, KodePerusahaan } from '@/context/CompanyContext';
 import { useAuth } from '@/context/AuthContext';
 import { formatTanggal } from '@/lib/utils';
-import { Settings, LogIn, LogOut, User as UserIcon } from 'lucide-react';
+import { Settings, LogIn, LogOut, User as UserIcon, Menu } from 'lucide-react';
 
-export function Header() {
+interface HeaderProps {
+  onOpenSidebarMobile?: () => void;
+}
+
+export function Header({ onOpenSidebarMobile }: HeaderProps) {
   const router = useRouter();
   const { selectedCompany, setSelectedCompany } = useCompany();
   const { user, signOut } = useAuth();
@@ -27,26 +31,42 @@ export function Header() {
   ];
 
   return (
-    <header className="bg-slate-900 text-white border-b border-slate-800 sticky top-0 z-40">
+    <header className="bg-slate-900 text-white border-b border-slate-800 sticky top-0 z-30 shadow-xs">
       <div className="max-w-7xl mx-auto px-4 py-3 sm:px-6">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-          {/* Sisi Kiri: Brand & Tanggal WIB */}
+          {/* Sisi Kiri: Mobile Brand/Hamburger & Desktop Context */}
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <Link href="/" className="flex items-center space-x-2.5 group">
-                <div className="w-9 h-9 rounded-lg bg-gradient-to-tr from-amber-500 to-sky-500 flex items-center justify-center font-black text-slate-950 text-xl tracking-tight shadow-md">
+            {/* Tampilan Desktop: Konteks Site */}
+            <div className="hidden md:flex items-center space-x-2 text-xs">
+              <span className="font-extrabold tracking-wide text-slate-200">
+                Site Tambang Musi Rawas Utara
+              </span>
+              <span className="text-slate-600">·</span>
+              <span className="text-slate-400 capitalize" suppressHydrationWarning>
+                {formatTanggal(todayWib)}
+              </span>
+            </div>
+
+            {/* Tampilan Mobile: Tombol Hamburger Menu + Brand */}
+            <div className="flex items-center space-x-2.5 md:hidden">
+              <button
+                type="button"
+                onClick={onOpenSidebarMobile}
+                className="p-2 rounded-xl bg-slate-800/90 text-slate-300 hover:text-white hover:bg-slate-700 transition border border-slate-700/60 cursor-pointer"
+                title="Buka Menu Navigasi"
+              >
+                <Menu className="w-5 h-5" />
+              </button>
+
+              <Link href="/" className="flex items-center space-x-2 group">
+                <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-amber-500 to-sky-500 flex items-center justify-center font-black text-slate-950 text-base shadow-sm">
                   R
                 </div>
-                <div>
-                  <div className="text-lg font-black tracking-wider text-slate-100 flex items-center gap-1.5">
-                    ROSTA
-                    <span className="text-[10px] uppercase font-bold tracking-widest px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">
-                      Site Muratara
-                    </span>
-                  </div>
-                  <p className="text-xs text-slate-400 capitalize" suppressHydrationWarning>
-                    {formatTanggal(todayWib)}
-                  </p>
+                <div className="text-base font-black tracking-wider text-slate-100 flex items-center gap-1">
+                  ROSTA
+                  <span className="text-[8px] uppercase font-bold tracking-widest px-1 py-0.2 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                    Muratara
+                  </span>
                 </div>
               </Link>
             </div>
