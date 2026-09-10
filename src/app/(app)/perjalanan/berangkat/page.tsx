@@ -478,7 +478,7 @@ function CatatKeberangkatanContent() {
                           : 'bg-rose-50 text-rose-700 hover:bg-rose-100'
                       }`}
                     >
-                      <span>⚠️ Overdue</span>
+                      <span>Overdue</span>
                       <span className="opacity-80">
                         ({candidates.filter((c) => c.status_roster === 'OVERDUE').length})
                       </span>
@@ -492,7 +492,7 @@ function CatatKeberangkatanContent() {
                           : 'bg-amber-50 text-amber-800 hover:bg-amber-100'
                       }`}
                     >
-                      <span>🟡 Segera Cuti</span>
+                      <span>Segera Cuti</span>
                       <span className="opacity-80">
                         ({candidates.filter((c) => c.status_roster === 'SEGERA_CUTI').length})
                       </span>

@@ -410,7 +410,7 @@ function CatatKedatanganContent() {
                           : 'bg-rose-50 text-rose-700 hover:bg-rose-100'
                       }`}
                     >
-                      <span>⚠️ Belum Kembali</span>
+                      <span>Belum Kembali</span>
                       <span className="opacity-80">
                         ({candidates.filter((c) => c.status_roster === 'BELUM_KEMBALI').length})
                       </span>
@@ -424,7 +424,7 @@ function CatatKedatanganContent() {
                           : 'bg-sky-50 text-sky-700 hover:bg-sky-100'
                       }`}
                     >
-                      <span>📅 Sedang Cuti</span>
+                      <span>Sedang Cuti</span>
                       <span className="opacity-80">
                         ({candidates.filter((c) => c.status_roster === 'SEDANG_CUTI').length})
                       </span>
