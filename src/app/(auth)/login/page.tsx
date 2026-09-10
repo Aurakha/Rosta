@@ -152,7 +152,6 @@ function LoginForm() {
                   required
                   value={nama}
                   onChange={(e) => setNama(e.target.value)}
-                  placeholder="nama"
                   className="w-full pl-10 pr-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-sm text-slate-100 placeholder:text-slate-600 focus:outline-hidden focus:border-sky-500 transition"
                 />
               </div>
@@ -170,7 +169,6 @@ function LoginForm() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="@gmail.com"
                 className="w-full pl-10 pr-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-sm text-slate-100 placeholder:text-slate-600 focus:outline-hidden focus:border-sky-500 transition"
               />
             </div>
@@ -188,7 +186,6 @@ function LoginForm() {
                 minLength={6}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Minimal 6 karakter"
                 className="w-full pl-10 pr-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-sm text-slate-100 placeholder:text-slate-600 focus:outline-hidden focus:border-sky-500 transition"
               />
             </div>
