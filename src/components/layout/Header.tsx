@@ -6,6 +6,7 @@ import { useCompany, KodePerusahaan } from '@/context/CompanyContext';
 import { useAuth } from '@/context/AuthContext';
 import { formatTanggal } from '@/lib/utils';
 import { Settings, LogIn, LogOut, User as UserIcon, Menu } from 'lucide-react';
+import { PwaInstallButton } from '@/components/common/PwaInstallButton';
 
 interface HeaderProps {
   onOpenSidebarMobile?: () => void;
@@ -68,8 +69,9 @@ export function Header({ onOpenSidebarMobile }: HeaderProps) {
               </Link>
             </div>
 
-            {/* Tombol Aksi Mobile (User / Login / Pengaturan) */}
+            {/* Tombol Aksi Mobile (Install / User / Login / Pengaturan) */}
             <div className="flex items-center gap-2 md:hidden">
+              <PwaInstallButton variant="compact" />
               {user ? (
                 <button
                   onClick={handleLogout}
@@ -119,6 +121,7 @@ export function Header({ onOpenSidebarMobile }: HeaderProps) {
             </div>
 
             <div className="hidden md:flex items-center gap-2">
+              <PwaInstallButton variant="header" />
               <Link
                 href="/pengaturan"
                 className="p-2 rounded-xl bg-slate-800 text-slate-300 hover:text-white hover:bg-slate-700 transition border border-slate-700/60"

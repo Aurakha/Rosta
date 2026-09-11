@@ -17,6 +17,7 @@ import {
   User as UserIcon,
   X,
 } from 'lucide-react';
+import { PwaInstallButton } from '@/components/common/PwaInstallButton';
 
 interface SidebarProps {
   isOpenMobile?: boolean;
@@ -146,6 +147,11 @@ export function Sidebar({ isOpenMobile, onCloseMobile }: SidebarProps) {
               </Link>
             );
           })}
+        </div>
+
+        {/* PWA Mobile App Download / Install Card */}
+        <div className="px-3 py-2 border-t border-slate-800/80 bg-slate-950/20">
+          <PwaInstallButton variant="sidebar" />
         </div>
 
         {/* User Account / Auth Footer */}
